@@ -1,6 +1,6 @@
 // src/pages/Settings.tsx
-
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import {
   FaUserCircle,
   FaCommentDots,
@@ -13,17 +13,19 @@ type SidebarButtonProps = {
   label: string;
   icon: React.ReactElement;
   active?: boolean;
+  to: string;
 };
 
-const SidebarButton: React.FC<SidebarButtonProps> = ({ label, icon, active }) => (
-  <button
+const SidebarButton: React.FC<SidebarButtonProps> = ({ label, icon, active, to }) => (
+  <Link
+    to={to}
     className={`flex items-center gap-3 px-4 py-2 rounded transition ${
       active ? "bg-red-500 text-white" : "text-gray-800 hover:bg-red-100"
     }`}
   >
     {icon}
     <span>{label}</span>
-  </button>
+  </Link>
 );
 
 const NavButton: React.FC<{ label: string }> = ({ label }) => (
@@ -69,10 +71,27 @@ const Settings: React.FC = () => {
 
         {/* Nav Items */}
         <nav className="flex flex-col space-y-4">
-          <SidebarButton label="New chat" icon={<FaCommentDots />} />
-          <SidebarButton label="Your materials" icon={<FaFolderOpen />} />
-          <SidebarButton label="Your Students" icon={<FaUserFriends />} />
-          <SidebarButton label="Settings" icon={<FaCog />} active />
+          <SidebarButton
+            label="New chat"
+            icon={<FaCommentDots />}
+            to="/newchat"
+          />
+          <SidebarButton
+            label="Your Materials"
+            icon={<FaFolderOpen />}
+            to="/yourmaterials"
+          />
+          <SidebarButton
+            label="Your Students"
+            icon={<FaUserFriends />}
+            to="/yourstudent"
+          />
+          <SidebarButton
+            label="Settings"
+            icon={<FaCog />}
+            to="/settings"
+            active
+          />
         </nav>
       </aside>
 

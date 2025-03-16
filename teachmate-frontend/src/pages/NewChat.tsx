@@ -1,5 +1,6 @@
 // src/pages/NewChat.tsx
 import React, { useRef, useState } from "react";
+import { Link } from "react-router-dom";
 import {
   FaUserCircle,
   FaPaperPlane,
@@ -14,17 +15,24 @@ type SidebarButtonProps = {
   label: string;
   icon: React.ReactElement;
   active?: boolean;
+  to: string;
 };
 
-const SidebarButton: React.FC<SidebarButtonProps> = ({ label, icon, active }) => (
-  <button
+const SidebarButton: React.FC<SidebarButtonProps> = ({
+  label,
+  icon,
+  active,
+  to,
+}) => (
+  <Link
+    to={to}
     className={`flex items-center gap-3 px-4 py-2 rounded transition ${
       active ? "bg-red-500 text-white" : "text-gray-800 hover:bg-red-100"
     }`}
   >
     {icon}
     <span>{label}</span>
-  </button>
+  </Link>
 );
 
 const NavButton: React.FC<{ label: string }> = ({ label }) => (
@@ -58,10 +66,23 @@ const NewChat: React.FC = () => {
 
         {/* Nav Items */}
         <nav className="flex flex-col space-y-4">
-          <SidebarButton label="New chat" icon={<FaCommentDots />} active />
-          <SidebarButton label="Your Materials" icon={<FaFolderOpen />} />
-          <SidebarButton label="Your Students" icon={<FaUserFriends />} />
-          <SidebarButton label="Settings" icon={<FaCog />} />
+          <SidebarButton
+            label="New chat"
+            icon={<FaCommentDots />}
+            active
+            to="/newchat"
+          />
+          <SidebarButton
+            label="Your Materials"
+            icon={<FaFolderOpen />}
+            to="/yourmaterials"
+          />
+          <SidebarButton
+            label="Your Students"
+            icon={<FaUserFriends />}
+            to="/yourstudent"
+          />
+          <SidebarButton label="Settings" icon={<FaCog />} to="/settings" />
         </nav>
       </aside>
 
@@ -108,7 +129,16 @@ const NewChat: React.FC = () => {
 
             {/* Upload Button with Upload Icon */}
             <div>
-              <input type="file" ref={fileInputRef} className="hidden" />
+              <input
+                type="file"
+                ref={fileInputRef}
+                className="hidden"
+                onChange={(e) => {
+                  if (e.target.files && e.target.files.length > 0) {
+                    console.log("Selected file:", e.target.files[0].name);
+                  }
+                }}
+              />
               <button
                 onClick={handleUploadClick}
                 className="flex items-center gap-2 bg-red-500 text-white font-bold py-2 px-4 rounded-md hover:bg-red-600 transition"

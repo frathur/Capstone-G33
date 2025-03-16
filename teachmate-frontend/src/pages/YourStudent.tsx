@@ -1,5 +1,6 @@
 // src/pages/YourStudents.tsx
 import React from "react";
+import { Link } from "react-router-dom";
 import {
   FaUserCircle,
   FaCommentDots,
@@ -14,17 +15,19 @@ type SidebarButtonProps = {
   label: string;
   icon: React.ReactElement;
   active?: boolean;
+  to: string;
 };
 
-const SidebarButton: React.FC<SidebarButtonProps> = ({ label, icon, active }) => (
-  <button
+const SidebarButton: React.FC<SidebarButtonProps> = ({ label, icon, active, to }) => (
+  <Link
+    to={to}
     className={`flex items-center gap-3 px-4 py-2 rounded transition ${
       active ? "bg-red-500 text-white" : "text-gray-800 hover:bg-red-100"
     }`}
   >
     {icon}
     <span>{label}</span>
-  </button>
+  </Link>
 );
 
 const NavButton: React.FC<{ label: string }> = ({ label }) => (
@@ -43,10 +46,10 @@ const YourStudents: React.FC = () => {
 
         {/* Nav Items */}
         <nav className="flex flex-col space-y-4">
-          <SidebarButton label="New chat" icon={<FaCommentDots />} />
-          <SidebarButton label="Your materials" icon={<FaFolderOpen />} />
-          <SidebarButton label="Your Students" icon={<FaUserFriends />} active />
-          <SidebarButton label="Settings" icon={<FaCog />} />
+          <SidebarButton label="New chat" icon={<FaCommentDots />} to="/newchat" />
+          <SidebarButton label="Your materials" icon={<FaFolderOpen />} to="/yourmaterials" />
+          <SidebarButton label="Your Students" icon={<FaUserFriends />} active to="/yourstudent" />
+          <SidebarButton label="Settings" icon={<FaCog />} to="/settings" />
         </nav>
       </aside>
 
@@ -89,7 +92,6 @@ const YourStudents: React.FC = () => {
             <h2 className="text-xl font-bold text-black">Students</h2>
             {/* Placeholder illustration */}
             <div className="w-full bg-white rounded-md h-48 flex items-center justify-center">
-              {/* Replace this with your actual image */}
               <img
                 src="https://via.placeholder.com/300x150?text=Students+Illustration"
                 alt="Students illustration"
